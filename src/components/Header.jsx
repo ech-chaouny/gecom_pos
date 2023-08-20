@@ -1,66 +1,25 @@
 import React from "react";
+import Tables from "../api/Tables";
 
-function Header() {
+function Header({ table_id, setTable_id }) {
   return (
     <>
       <div className="row">
         <div className="col-md-4">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="card mb-2">
-                <div className="row">
-                  <div className="col-md-10">
-                    <div className="d-flex">
-                      <i className="bx bx-user mt-2 ms-1"></i>
-                      <select
-                        id="selectTypeOpt"
-                        className="form-select border-0 shadow-none"
-                      >
-                        <option defaultValue="bg-primary" selected>
-                          User
-                        </option>
-                        <option defaultValue="bg-secondary">Secondary</option>
-                        <option defaultValue="bg-success">Success</option>
-                        <option defaultValue="bg-danger">Danger</option>
-                        <option defaultValue="bg-warning">Warning</option>
-                        <option defaultValue="bg-info">
-                          Chowdhury pharmacy
-                        </option>
-                        <option defaultValue="bg-dark">Dark</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-md-2">
-                    <button
-                      type="button"
-                      className="user-btn position-absolute btn btn-primary"
-                    >
-                      <i className="bx bxs-user-plus"></i>{" "}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="card mb-2">
-                <div className="d-flex">
-                  <i className="bx bxs-home mt-2 ms-1"></i>
-                  <select
-                    id="selectTypeOpt"
-                    className="form-select border-0 shadow-none"
-                  >
-                    <option defaultValue="bg-primary" selected>
-                      Depot
-                    </option>
-                    <option defaultValue="bg-secondary">Secondary</option>
-                    <option defaultValue="bg-success">Success</option>
-                    <option defaultValue="bg-danger">Danger</option>
-                    <option defaultValue="bg-warning">Warning</option>
-                    <option defaultValue="bg-info">Info</option>
-                    <option defaultValue="bg-dark">Dark</option>
-                  </select>
-                </div>
-              </div>
+          <div className="card mb-2">
+            <div className="d-flex">
+              <i className="bx bxs-home mt-2 ms-1"></i>
+              <select
+                id="selectTypeOpt"
+                value={table_id}
+                onChange={(e) => setTable_id(e.target.value)}
+                className="form-select border-0 shadow-none"
+              >
+                <option value="" selected>
+                  Selectionnez la Table
+                </option>
+                <Tables />
+              </select>
             </div>
           </div>
         </div>
@@ -92,12 +51,12 @@ function Header() {
             <a href className="content-btn bg-info">
               <i className="bx bx-fullscreen bx-md"></i>{" "}
             </a>
-            <a href className="content-btn mx-3 bg-primary">
+            {/* <a href className="content-btn mx-3 bg-primary">
               <i className="bx bxs-calculator bx-md"></i>{" "}
             </a>
             <a href className="content-btn bg-primary">
               <i className="bx bx-home-circle bx-md"></i>{" "}
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

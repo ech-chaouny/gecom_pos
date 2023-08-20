@@ -1,0 +1,23 @@
+/* Set the container to hide overflowing elements and enable scrolling */
+.button-list {
+  display: flex;
+  /* Use flexbox to arrange buttons horizontally */
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 10px;
+  /* Adjust spacing between buttons */
+  padding: 5px;
+  /* Optional: Add padding for better visual appearance */
+}
+
+/* Style each button item */
+.button-list__item {
+  flex: 0 0 auto;
+  /* Prevent buttons from shrinking or growing */
+}
+
+
+/* Hide the scrollbar */
+.button-list::-webkit-scrollbar {
+  display: none;
+}

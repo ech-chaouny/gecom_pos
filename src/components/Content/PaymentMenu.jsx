@@ -1,9 +1,13 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
-function PaymentMenu({ produits, setProduits }) {
+function PaymentMenu({ produits, setProduits, table_id, setTable_id }) {
   const [remise, setRemise] = useState();
   const [shipping, setShipping] = useState();
+  const [loading, setLoading] = useState(false);
+
   const deleteProduit = (id) => {
     const supp = produits.filter((produit) => produit.id !== id);
     setProduits(supp);
@@ -11,7 +15,7 @@ function PaymentMenu({ produits, setProduits }) {
 
   const subTotal = () => {
     let total = 0;
-    produits.map((produit) => (total += produit.qte * produit.prix_achat_ht));
+    produits.map((produit) => (total += produit.qte * produit.prix));
     return total;
   };
   const qteTotal = () => {
@@ -58,6 +62,63 @@ function PaymentMenu({ produits, setProduits }) {
   const resetAll = () => {
     setProduits([]);
   };
+  const createCommande = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    const commande = {
+      user_id: 1,
+      table_id,
+      regle: 0,
+      article_id: produits,
+    };
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/commande",
+        commande
+      );
+      // Create an async function to handle adding detail to command
+      const addDetailToCommand = async (commandId, produit) => {
+        const detailCommande = {
+          commande_id: commandId,
+          article_id: produit.id,
+          prix: produit.prix,
+          qte: produit.qte,
+        };
+        const response_d = await axios.post(
+          "http://127.0.0.1:8000/api/detailCommande",
+          detailCommande
+        );
+      };
+      for (const produit of produits) {
+        await addDetailToCommand(response.data.commande.id, produit);
+      }
+      toast.success(response.data.success, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      setLoading(false);
+      setProduits([]);
+      setTable_id("");
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
   return (
     <>
       <div className="card mb-2">
@@ -85,9 +146,9 @@ function PaymentMenu({ produits, setProduits }) {
                     <td className="text-nowrap col-5">
                       <strong>{produit.designation}</strong>
                       <br />
-                      <span className="badge bg-label-primary">
+                      {/* <span className="badge bg-label-primary">
                         {produit.reference}
-                      </span>
+                      </span> */}
                     </td>
                     <td className="col-2">
                       <div className="counter d-flex align-items-center justify-content-center">
@@ -113,9 +174,9 @@ function PaymentMenu({ produits, setProduits }) {
                         </button>
                       </div>
                     </td>
-                    <td className="text-center">{produit.prix_achat_ht}</td>
+                    <td className="text-center">{produit.prix}</td>
                     <td className="text-center">
-                      {produit.prix_achat_ht * produit.qte}
+                      {produit.prix * produit.qte}
                     </td>
                     <td className="text-center">
                       <a
@@ -231,9 +292,10 @@ function PaymentMenu({ produits, setProduits }) {
           </button>
           <button
             type="button"
+            onClick={createCommande}
             className="text-white w-100 pm-3 rounded-10 pn-3 pos-pay-btn btn btn-success"
           >
-            Payez<i className="ms-2 fa fa-money-bill"></i>
+            Valider<i className="ms-2 fa fa-money-bill"></i>
           </button>
         </div>
       </div>
