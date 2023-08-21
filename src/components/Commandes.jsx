@@ -5,7 +5,7 @@ function Commandes() {
   const [commandes, setCommandes] = useState();
   useEffect(() => {
     getCommandes();
-  }, []);
+  });
   const getCommandes = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/commandes");
