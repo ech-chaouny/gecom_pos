@@ -20,7 +20,11 @@ function App() {
                 setTable_id={setTable_id}
                 user={user}
               />
-              <Content table_id={table_id} setTable_id={setTable_id} />
+              <Content
+                user={user}
+                table_id={table_id}
+                setTable_id={setTable_id}
+              />
               <Commandes />{" "}
             </>
           ) : (

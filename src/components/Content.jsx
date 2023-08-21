@@ -3,7 +3,7 @@ import PaymentMenu from "./Content/PaymentMenu";
 import ArticlesMenu from "./Content/ArticlesMenu";
 import { useState } from "react";
 
-function Content({ table_id, setTable_id }) {
+function Content({ table_id, setTable_id, user }) {
   const [produits, setProduits] = useState([]);
   const addProduits = (data) => {
     setProduits([data, ...produits]);
@@ -13,6 +13,7 @@ function Content({ table_id, setTable_id }) {
       <div className="row">
         <div className="col-md-4">
           <PaymentMenu
+            user={user}
             produits={produits}
             setProduits={setProduits}
             table_id={table_id}

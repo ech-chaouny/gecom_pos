@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-function PaymentMenu({ produits, setProduits, table_id, setTable_id }) {
+function PaymentMenu({ produits, setProduits, table_id, setTable_id, user }) {
   const [remise, setRemise] = useState();
   const [shipping, setShipping] = useState();
   const [loading, setLoading] = useState(false);
@@ -66,7 +66,7 @@ function PaymentMenu({ produits, setProduits, table_id, setTable_id }) {
     setLoading(true);
     e.preventDefault();
     const commande = {
-      user_id: 1,
+      user_id: user.id,
       table_id,
       regle: 0,
       article_id: produits,
