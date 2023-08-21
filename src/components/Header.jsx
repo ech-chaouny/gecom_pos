@@ -1,25 +1,48 @@
 import React from "react";
 import Tables from "../api/Tables";
 
-function Header({ table_id, setTable_id }) {
+function Header({ table_id, setTable_id, user }) {
   return (
     <>
       <div className="row">
         <div className="col-md-4">
-          <div className="card mb-2">
-            <div className="d-flex">
-              <i className="bx bxs-home mt-2 ms-1"></i>
-              <select
-                id="selectTypeOpt"
-                value={table_id}
-                onChange={(e) => setTable_id(e.target.value)}
-                className="form-select border-0 shadow-none"
-              >
-                <option value="" selected>
-                  Selectionnez la Table
-                </option>
-                <Tables />
-              </select>
+          <div className="row">
+            <div className="col-md-6">
+              <div className="card mb-2">
+                <div className="row">
+                  <div className="col-md-10">
+                    <div className="d-flex">
+                      <i className="bx bx-user mt-2 ms-1"></i>
+                      <select
+                        id="selectTypeOpt"
+                        className="form-select border-0 shadow-none"
+                      >
+                        <option defaultValue="Utilisateurs" selected>
+                          {user.name}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="card mb-2">
+                <div className="d-flex">
+                  <i className="bx bxs-home mt-2 ms-1"></i>
+                  <select
+                    id="selectTypeOpt"
+                    value={table_id}
+                    onChange={(e) => setTable_id(e.target.value)}
+                    className="form-select border-0 shadow-none"
+                  >
+                    <option value="" selected>
+                      Selectionnez la Table
+                    </option>
+                    <Tables />
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
